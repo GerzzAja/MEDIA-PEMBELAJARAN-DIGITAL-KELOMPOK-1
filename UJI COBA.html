@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Petualangan Gaya - Kelas 4 SD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>🎮 PETUALANGAN GAYA - KELAS 4 SD 🎮</h1>
+            <div class="nav-buttons">
+                <button data-game="tarik-lawan" class="nav-btn active">🎯 1. Dorong & Tarik</button>
+                <button data-game="balap-perahu" class="nav-btn">⛵ 2. Gaya Gesek (Balap Perahu)</button>
+                <button data-game="tarik-seluncur" class="nav-btn">🛷 3. Tarik Seluncur</button>
+                <button data-game="tangkap-buah" class="nav-btn">🍎 4. Gravitasi (Tangkap Apel)</button>
+                <button data-game="basket" class="nav-btn">🏀 5. Lempar Bola Basket</button>
+            </div>
+            <div class="global-score">
+                🏆 SKOR AKHIR: <span id="globalScoreDisplay">0</span> : <span id="globalScoreDisplay2">0</span> 🏆
+            </div>
+        </header>
+
+        <main id="game-main-area"></main>
+
+        <div id="player-modal" class="modal">
+            <div class="modal-content">
+                <h2>👋 Masukkan Nama Pemain</h2>
+                <div id="player-inputs-container"></div>
+                <button id="start-game-btn">🚀 Mulai Petualangan!</button>
+            </div>
+        </div>
+
+        <div id="leaderboard-modal" class="modal leaderboard-modal">
+            <div class="modal-content">
+                <h2 id="leaderboardTitle">🏆 PEMENANG GAME 🏆</h2>
+                <div id="leaderboard-list"></div>
+                <button id="close-leaderboard">Tutup</button>
+            </div>
+        </div>
+
+        <div id="final-winner-modal" class="modal">
+            <div class="modal-content">
+                <h2>🏆 PEMENANG PETUALANGAN GAYA 🏆</h2>
+                <div id="finalWinnerText"></div>
+                <button id="reset-all-btn">🔄 Main Lagi dari Awal</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
