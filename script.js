@@ -100,7 +100,7 @@
             </div>
             <div class="game-controls">
                 <div class="player-zone"><div class="player-name">${playerNames[0]}</div><button class="action-btn" id="pullLeftBtn">Tendang!</button><div class="score" id="leftScore">0</div></div>
-                <div class="player-zone"><div class="player-name">${playerNames[1]}</div><button class="action-btn" id="pullRightBtn">Te!</button><div class="score" id="rightScore">0</div></div>
+                <div class="player-zone"><div class="player-name">${playerNames[1]}</div><button class="action-btn" id="pullRightBtn">Tendang!</button><div class="score" id="rightScore">0</div></div>
             </div>
             <button class="reset-btn" id="resetTarik">🔄 Game Baru</button>
         `;
