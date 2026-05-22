@@ -92,107 +92,118 @@
         return panel;
     }
 
-    // ========== GAME 1: TARIK LAWAN (F = m × a) ==========
-    function initTarikLawan() {
-        let posisi = 50, leftScore = 0, rightScore = 0, gameActive = true;
-        let lastClickLeft = 0, lastClickRight = 0;
-        let massa = 5;
-        const container = document.createElement("div");
-        container.className = "game-container";
-        container.innerHTML = `
-            <div class="game-visual" style="background-image: url('background-lapangan-bola.jpg'); background-size: cover; background-position: center;">
-                <div class="rope-line"></div>
-                <div class="flag-left">🥅</div>
-                <div class="flag-right">🥅</div>
-                <div id="tarikBall" class="bola-sepak" style="left: calc(50% - 40px);">
-                    <img src="${twemojiBase}/26bd.png" alt="bola" style="width:80px; height:80px;">
-                </div>
+    // ========== GAME 1: TARIK LAWAN (F = m × a)
+function initTarikLawan() {
+    let posisi = 50, leftScore = 0, rightScore = 0, gameActive = true;
+    let lastClickLeft = 0, lastClickRight = 0;
+    let massa = 5;
+    const container = document.createElement("div");
+    container.className = "game-container";
+    container.innerHTML = `
+        <div class="game-visual" style="background-image: url('background-lapangan-bola.jpg'); background-size: cover; background-position: center;">
+            <div class="rope-line"></div>
+            <div class="flag-left">🥅</div>
+            <div class="flag-right">🥅</div>
+            <div id="tarikBall" class="bola-sepak" style="left: calc(50% - 40px);">
+                <img src="${twemojiBase}/26bd.png" alt="bola" style="width:80px; height:80px;">
             </div>
-            <div class="game-controls">
-                <div class="player-zone"><div class="player-name">${playerNames[0]}</div><button class="action-btn" id="pullLeftBtn">Tendang!</button><div class="score" id="leftScore">0</div></div>
-                <div class="player-zone"><div class="player-name">${playerNames[1]}</div><button class="action-btn" id="pullRightBtn">Tendang!</button><div class="score" id="rightScore">0</div></div>
-            </div>
-            <button class="reset-btn" id="resetTarik">🔄 Game Baru</button>
-        `;
-        const ball = container.querySelector("#tarikBall");
-        const leftScoreEl = container.querySelector("#leftScore");
-        const rightScoreEl = container.querySelector("#rightScore");
+        </div>
+        <div class="game-controls">
+            <div class="player-zone"><div class="player-name">${playerNames[0]}</div><button class="action-btn" id="pullLeftBtn">Tendang!</button><div class="score" id="leftScore">0</div></div>
+            <div class="player-zone"><div class="player-name">${playerNames[1]}</div><button class="action-btn" id="pullRightBtn">Tendang!</button><div class="score" id="rightScore">0</div></div>
+        </div>
+        <button class="reset-btn" id="resetTarik">🔄 Game Baru</button>
+    `;
+    const ball = container.querySelector("#tarikBall");
+    const leftScoreEl = container.querySelector("#leftScore");
+    const rightScoreEl = container.querySelector("#rightScore");
 
-        const physicsHtml = `
-            <div class="param-row"><label>⚖️ Massa Bola (kg):</label><input type="range" id="massSlider" min="1" max="20" step="0.5" value="5"><span id="massValue" class="live-value">5 kg</span></div>
-            <div class="param-row"><span>💪 Gaya Dorong (N):</span><span id="forceLeft" class="live-value">0</span> / <span id="forceRight" class="live-value">0</span></div>
-            <div class="param-row"><span>📈 Percepatan (m/s²):</span><span id="accLeft" class="live-value">0</span> / <span id="accRight" class="live-value">0</span></div>
-        `;
-        const formulaHtml = `🔬 <strong>Rumus Gaya Dorong/Tarik: F = m × a</strong><br>Gaya (F) dari kecepatan klik, massa (m) diatur siswa → a = F/m → gerak bola.`;
-        const panel = createPhysicsPanel("GAYA & PERCEPATAN", physicsHtml, formulaHtml);
-        container.appendChild(panel);
+    const physicsHtml = `
+        <div class="param-row"><label>⚖️ Massa Bola (kg):</label><input type="range" id="massSlider" min="1" max="20" step="0.5" value="5"><span id="massValue" class="live-value">5 kg</span></div>
+        <div class="param-row"><span>💪 Gaya Dorong (N):</span><span id="forceLeft" class="live-value">0</span> / <span id="forceRight" class="live-value">0</span></div>
+        <div class="param-row"><span>📈 Percepatan (m/s²):</span><span id="accLeft" class="live-value">0</span> / <span id="accRight" class="live-value">0</span></div>
+    `;
+    const formulaHtml = `🔬 <strong>Rumus Gaya Dorong/Tarik: F = m × a</strong><br>Gaya (F) dari kecepatan klik, massa (m) diatur siswa → a = F/m → gerak bola.`;
+    const panel = createPhysicsPanel("GAYA & PERCEPATAN", physicsHtml, formulaHtml);
+    container.appendChild(panel);
 
-        const massSlider = panel.querySelector("#massSlider");
-        const massValueSpan = panel.querySelector("#massValue");
-        const forceLeftSpan = panel.querySelector("#forceLeft");
-        const forceRightSpan = panel.querySelector("#forceRight");
-        const accLeftSpan = panel.querySelector("#accLeft");
-        const accRightSpan = panel.querySelector("#accRight");
+    const massSlider = panel.querySelector("#massSlider");
+    const massValueSpan = panel.querySelector("#massValue");
+    const forceLeftSpan = panel.querySelector("#forceLeft");
+    const forceRightSpan = panel.querySelector("#forceRight");
+    const accLeftSpan = panel.querySelector("#accLeft");
+    const accRightSpan = panel.querySelector("#accRight");
 
-        function hitungGayaDanPercepatan(kecepatanKlik, m) {
-            let gaya = Math.min(kecepatanKlik * 40, 250);
-            let a = gaya / m;
-            return { gaya, a };
-        }
+    function hitungGayaDanPercepatan(kecepatanKlik, m) {
+        let gaya = Math.min(kecepatanKlik * 40, 250);
+        let a = gaya / m;
+        return { gaya, a };
+    }
 
-        function updatePosition(power) {
-            posisi = Math.min(Math.max(posisi + power, 0), 100);
-            ball.style.left = `calc(${posisi}% - 40px)`;
-            if (gameActive) {
-                if (posisi <= 3) {
-                    gameActive = false; leftScore++; leftScoreEl.innerText = leftScore;
-                    addWinToGlobal(0); showLeaderboard("tarik-lawan", playerNames[0]);
-                    setTimeout(() => resetGame(), 2000);
-                } else if (posisi >= 97) {
-                    gameActive = false; rightScore++; rightScoreEl.innerText = rightScore;
-                    addWinToGlobal(1); showLeaderboard("tarik-lawan", playerNames[1]);
-                    setTimeout(() => resetGame(), 2000);
-                }
+    function updatePosition(power) {
+        posisi = Math.min(Math.max(posisi + power, 0), 100);
+        ball.style.left = `calc(${posisi}% - 40px)`;
+        if (gameActive) {
+            // Bola masuk gawang kanan (posisi >= 97) => Pemain kiri mendapat skor
+            if (posisi >= 97) {
+                gameActive = false;
+                leftScore++;
+                leftScoreEl.innerText = leftScore;
+                addWinToGlobal(0);
+                showLeaderboard("tarik-lawan", playerNames[0]);
+                setTimeout(() => resetGame(), 2000);
+            } 
+            // Bola masuk gawang kiri (posisi <= 3) => Pemain kanan mendapat skor
+            else if (posisi <= 3) {
+                gameActive = false;
+                rightScore++;
+                rightScoreEl.innerText = rightScore;
+                addWinToGlobal(1);
+                showLeaderboard("tarik-lawan", playerNames[1]);
+                setTimeout(() => resetGame(), 2000);
             }
         }
-
-        function resetGame() { posisi = 50; gameActive = true; ball.style.left = "calc(50% - 40px)"; }
-        function fullReset() { leftScore = 0; rightScore = 0; gameActive = true; posisi = 50; leftScoreEl.innerText = "0"; rightScoreEl.innerText = "0"; ball.style.left = "calc(50% - 40px)"; }
-
-        container.querySelector("#pullLeftBtn").addEventListener('click', () => {
-            if (!gameActive) return;
-            let now = Date.now();
-            let delta = now - lastClickLeft;
-            let kecepatanKlik = delta > 0 ? Math.min(1000 / delta, 15) : 5;
-            lastClickLeft = now;
-            let { gaya, a } = hitungGayaDanPercepatan(kecepatanKlik, massa);
-            forceLeftSpan.innerText = gaya.toFixed(1);
-            accLeftSpan.innerText = a.toFixed(2);
-            let power = -Math.min(a * 0.9, 18);
-            updatePosition(power);
-        });
-
-        container.querySelector("#pullRightBtn").addEventListener('click', () => {
-            if (!gameActive) return;
-            let now = Date.now();
-            let delta = now - lastClickRight;
-            let kecepatanKlik = delta > 0 ? Math.min(1000 / delta, 15) : 5;
-            lastClickRight = now;
-            let { gaya, a } = hitungGayaDanPercepatan(kecepatanKlik, massa);
-            forceRightSpan.innerText = gaya.toFixed(1);
-            accRightSpan.innerText = a.toFixed(2);
-            let power = Math.min(a * 0.9, 18);
-            updatePosition(power);
-        });
-
-        massSlider.addEventListener("input", (e) => {
-            massa = parseFloat(e.target.value);
-            massValueSpan.innerText = massa + " kg";
-        });
-
-        container.querySelector("#resetTarik").onclick = fullReset;
-        return container;
     }
+
+    function resetGame() { posisi = 50; gameActive = true; ball.style.left = "calc(50% - 40px)"; }
+    function fullReset() { leftScore = 0; rightScore = 0; gameActive = true; posisi = 50; leftScoreEl.innerText = "0"; rightScoreEl.innerText = "0"; ball.style.left = "calc(50% - 40px)"; }
+
+    // Tombol kiri (Budi) -> tendang ke kanan (power positif)
+    container.querySelector("#pullLeftBtn").addEventListener('click', () => {
+        if (!gameActive) return;
+        let now = Date.now();
+        let delta = now - lastClickLeft;
+        let kecepatanKlik = delta > 0 ? Math.min(1000 / delta, 15) : 5;
+        lastClickLeft = now;
+        let { gaya, a } = hitungGayaDanPercepatan(kecepatanKlik, massa);
+        forceLeftSpan.innerText = gaya.toFixed(1);
+        accLeftSpan.innerText = a.toFixed(2);
+        let power = Math.min(a * 0.9, 18);   // POSITIF: ke kanan
+        updatePosition(power);
+    });
+
+    // Tombol kanan (Ani) -> tendang ke kiri (power negatif)
+    container.querySelector("#pullRightBtn").addEventListener('click', () => {
+        if (!gameActive) return;
+        let now = Date.now();
+        let delta = now - lastClickRight;
+        let kecepatanKlik = delta > 0 ? Math.min(1000 / delta, 15) : 5;
+        lastClickRight = now;
+        let { gaya, a } = hitungGayaDanPercepatan(kecepatanKlik, massa);
+        forceRightSpan.innerText = gaya.toFixed(1);
+        accRightSpan.innerText = a.toFixed(2);
+        let power = -Math.min(a * 0.9, 18);  // NEGATIF: ke kiri
+        updatePosition(power);
+    });
+
+    massSlider.addEventListener("input", (e) => {
+        massa = parseFloat(e.target.value);
+        massValueSpan.innerText = massa + " kg";
+    });
+
+    container.querySelector("#resetTarik").onclick = fullReset;
+    return container;
+}
 
     // ========== GAME 2: BALAP PERAHU (F_gesek = μ × N) ==========
     function initBalapPerahu() {
