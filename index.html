@@ -2,53 +2,108 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Petualangan Gaya - Kelas 4 SD</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🌈 Petualangan Gaya | Lab Fisika SD</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
-        <header>
-            <h1>🎮 PETUALANGAN GAYA - KELAS 4 SD 🎮</h1>
-            <div class="nav-buttons">
-                <button data-game="tarik-lawan" class="nav-btn active">🎯 1. Dorong Bola</button>
-                <button data-game="balap-perahu" class="nav-btn">⛵ 2. Gaya Gesek (Balap Perahu)</button>
-                <button data-game="tarik-seluncur" class="nav-btn">🛷 3. Tarik Seluncur</button>
-                <button data-game="tangkap-buah" class="nav-btn">🍎 4. Gravitasi (Tangkap Apel)</button>
-                <button data-game="basket" class="nav-btn">🏀 5. Lempar Bola Basket</button>
-            </div>
-            <div class="global-score">
-                🏆 SKOR AKHIR: <span id="globalScoreDisplay">0</span> : <span id="globalScoreDisplay2">0</span> 🏆
-            </div>
-        </header>
 
-        <main id="game-main-area"></main>
+<div class="app-container">
 
-        <div id="player-modal" class="modal">
-            <div class="modal-content">
-                <h2>👋 Masukkan Nama Pemain</h2>
-                <div id="player-inputs-container"></div>
-                <button id="start-game-btn">🚀 Mulai Petualangan!</button>
-            </div>
+    <!-- HEADER -->
+    <header class="phet-header">
+        <h1>🔬 PETUALANGAN GAYA | LAB FISIKA SERU 🔬</h1>
+        <div class="global-score">
+            🏆 SKOR AKHIR:
+            <span id="globalScoreDisplay">0</span>
+            :
+            <span id="globalScoreDisplay2">0</span>
+            🏆
         </div>
+    </header>
 
-        <div id="leaderboard-modal" class="modal leaderboard-modal">
-            <div class="modal-content">
-                <h2 id="leaderboardTitle">🏆 PEMENANG GAME 🏆</h2>
-                <div id="leaderboard-list"></div>
-                <button id="close-leaderboard">Tutup</button>
+    <!-- MENU PILIHAN GAME (dengan awan) -->
+    <div id="menuContainer" class="menu-container">
+
+        <!-- Awan-awan -->
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+        <div class="cloud cloud5"></div>
+        <div class="cloud cloud6"></div>
+        <div class="cloud cloud7"></div>
+        <div class="cloud cloud8"></div>
+
+        <!-- Grid kartu game -->
+        <div class="game-grid">
+            <div class="game-card" data-game="tarik-lawan">
+                <div class="card-icon">⚽🏃‍♂️</div>
+                <div class="card-title">Tendang Bola</div>
+                <div class="card-desc">Gaya Dorong</div>
             </div>
-        </div>
-
-        <div id="final-winner-modal" class="modal">
-            <div class="modal-content">
-                <h2>🏆 PEMENANG PETUALANGAN GAYA 🏆</h2>
-                <div id="finalWinnerText"></div>
-                <button id="reset-all-btn">🔄 Main Lagi dari Awal</button>
+            <div class="game-card" data-game="balap-perahu">
+                <div class="card-icon">⛵💨</div>
+                <div class="card-title">Balap Perahu</div>
+                <div class="card-desc">Gaya Gesek</div>
+            </div>
+            <div class="game-card" data-game="tarik-seluncur">
+                <div class="card-icon">🛷❄️</div>
+                <div class="card-title">Tarik Seluncur</div>
+                <div class="card-desc">Gaya Tarik</div>
+            </div>
+            <div class="game-card" data-game="tangkap-buah">
+                <div class="card-icon">🍎🌍</div>
+                <div class="card-title">Tangkap Apel</div>
+                <div class="card-desc">Gaya Gravitasi</div>
+            </div>
+            <div class="game-card" data-game="basket">
+                <div class="card-icon">🏀🎯</div>
+                <div class="card-title">Lempar Basket</div>
+                <div class="card-desc">Gaya Gravitasi</div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- GAME WRAPPER (saat game dipilih) -->
+    <div id="gameWrapper" class="game-wrapper" style="display: none;">
+        <div class="game-header-bar">
+            <button id="backToMenuBtn" class="btn-back">🔙 KEMBALI</button>
+            <div class="game-title-badge" id="gameTitleBadge">🎮 BERMAIN</div>
+        </div>
+        <div id="game-main-area"></div>
+    </div>
+
+    <!-- MODAL NAMA PEMAIN -->
+    <div id="player-modal" class="modal">
+        <div class="modal-content">
+            <h2>👋 NAMA PEMAIN PETUALANG</h2>
+            <div id="player-inputs-container"></div>
+            <button id="start-game-btn">🚀 MULAI PETUALANGAN!</button>
+        </div>
+    </div>
+
+    <!-- MODAL PEMENANG PER GAME -->
+    <div id="leaderboard-modal" class="modal leaderboard-modal">
+        <div class="modal-content">
+            <h2 id="leaderboardTitle">🏆 PEMENANG GAME 🏆</h2>
+            <div id="leaderboard-list"></div>
+            <button id="close-leaderboard">Tutup</button>
+        </div>
+    </div>
+
+    <!-- MODAL PEMENANG FINAL -->
+    <div id="final-winner-modal" class="modal">
+        <div class="modal-content">
+            <h2>🏆 PEMENANG PETUALANGAN GAYA 🏆</h2>
+            <div id="finalWinnerText"></div>
+            <button id="reset-all-btn">🔄 Main Lagi</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
